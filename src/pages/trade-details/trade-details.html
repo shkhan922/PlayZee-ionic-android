@@ -1,0 +1,53 @@
+<ion-content class="text-center">
+
+    <!-- Back button -->
+    <img class="ov-l-t p-t-30 p-l-20" src="https://png.icons8.com/ios/24/ffffff/left-filled.png" (click)="back()">
+
+    <div class="bg-grad p-20 m-b-20">
+      <h4 class="m-0">Offer or ask for a difference</h4>
+      <p class="m-0">Choose the amount and wait for it.</p>
+  </div>
+    
+    <ion-list class="p-30 add-form">
+
+    <ion-item class="m-b-20">
+      <ion-label fixed>Amount</ion-label>
+      <ion-input type="number" value="" [(ngModel)]="amount"></ion-input>
+    </ion-item>
+
+    <ion-list radio-group [(ngModel)]="difference" class="p-b-10 m-0">
+        <ion-grid class="p-0">
+            <ion-row class="bg-checked p-0">
+                <ion-col col-6 class="p-0">
+                      <ion-item>
+                              <ion-label>Offer</ion-label>
+                              <ion-radio value="plus"></ion-radio>
+                            </ion-item>
+                </ion-col>
+                <ion-col col-6 class="p-0">
+                      <ion-item>
+                              <ion-label>Ask</ion-label>
+                              <ion-radio value="minus"></ion-radio>
+                            </ion-item>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-list>
+
+      <p *ngIf="amount">You are going to offer 
+        {{offered_product.title}} 
+        <span *ngIf="difference == 'plus'"> and offer another </span>
+        <span *ngIf="difference == 'minus'"> and ask for another </span> 
+        ${{amount}} 
+        for {{desired_product.title}}</p>
+
+        <div class="bg-light op-5">
+            <p *ngIf="desired_product.price < offered_product.price">You should ask for another ${{0 - (desired_product.price - offered_product.price)}}</p>
+            <p *ngIf="desired_product.price > offered_product.price">You should offer another ${{desired_product.price - offered_product.price}}</p>
+        </div>
+        
+
+    <button class="m-t-30" ion-button color="primary" round block (click)="send()">Send your offer</button>
+  </ion-list>
+
+</ion-content>

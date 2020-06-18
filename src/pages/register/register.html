@@ -1,0 +1,43 @@
+<ion-content padding class="text-center">
+
+  <!-- Back button -->
+  <img class="ov-l-t p-20" src="https://png.icons8.com/ios/24/333333/left-filled.png" (click)="back()">
+
+    <div class="p-l-50 p-r-30 text-left">
+        <img src="https://png.icons8.com/cotton/100/000000/fast-browsing.png">
+  
+        <h4>Create your account</h4>
+        <p>Choose your credentials and create your account.</p>
+    </div>
+      
+      <ion-list class="p-30 custom-form">
+  
+          <ion-item>
+              <ion-label floating class="">Username</ion-label>
+              <ion-input type="text" value="" [(ngModel)]="username"></ion-input>
+            </ion-item>
+  
+            <ion-item>
+                <ion-label floating class="">Email</ion-label>
+                <ion-input type="email" value="" [(ngModel)]="email"></ion-input>
+              </ion-item>
+        
+          <ion-item>
+              <ion-label floating class="">Password</ion-label>
+              <ion-input type="password" [(ngModel)]="password"></ion-input>
+            </ion-item>
+  
+            <ion-item>
+                <ion-label floating class="">Password again</ion-label>
+                <ion-input type="password" [(ngModel)]="password2"></ion-input>
+              </ion-item>
+  
+      <button class="m-t-30" ion-button color="primary" round block (click)="register(username, email, password, password2)">Register</button>
+      <p class="p-t-30">Already registered?</p>
+      <button ion-button color="primary" round block outline (click)="loginPage()">Access your account</button>
+      <a class="block p-t-50" (click)="homePage()"><img class="" src="https://png.icons8.com/ios/10/333333/left-filled.png" (click)="back()"> Back to home</a>
+    </ion-list>
+  
+      
+  
+  </ion-content>

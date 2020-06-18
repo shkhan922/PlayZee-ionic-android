@@ -1,0 +1,140 @@
+<ion-content>
+
+        <div class="bg-grad">
+
+            <ion-grid>
+                <ion-row align-items-center>
+                    <ion-col>
+                        <!-- Back button -->
+                        <img src="https://png.icons8.com/ios/24/ffffff/left-filled.png" (click)="back()">
+                    </ion-col>
+                    <ion-col class="text-right">
+                            <img src="https://png.icons8.com/ios-glyphs/24/ffffff/shutdown.png" (click)="logout()">
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+
+   
+
+        <div class="text-center p-b-20">
+            <div (click)="showConfirm()" *ngIf="!image" [style.background-image]="getBackground(user_profile.image)" style="background-size:cover; background-position:center; height:90px;width:90px;" class="shadow-big round-big ov-hidden inline"></div>
+            <div (click)="showConfirm()" *ngIf="image" [style.background-image]="getBackground(image)" style="background-size:cover; background-position:center; height:150px;width:150px;" class="shadow-big round-big ov-hidden inline"></div>
+            <p class="fw-900 text-white m-0">{{user_base.username}}</p>
+            <p class="text-white fs-10 m-0">{{user_profile.location}}</p>
+        </div>
+
+        <ion-grid class="text-center border-t">
+        <ion-row>
+            <ion-col (click)="changeTab('products')" class="bg-main-l m-5">
+                <img src="https://png.icons8.com/ios-glyphs/24/ffffff/tails.png">
+                <p class="m-0 fs-10 up">Products</p>
+            </ion-col>
+            <ion-col (click)="changeTab('favourites')" class="bg-main-l m-5">
+                <img src="https://png.icons8.com/ios-glyphs/24/ffffff/two-hearts.png">
+                <p class="m-0 fs-10 up">Favourites</p>
+            </ion-col>
+            <ion-col (click)="changeTab('trades')" class="bg-main-l m-5">
+                <img src="https://png.icons8.com/ios-glyphs/24/ffffff/synchronize.png">
+                <p class="m-0 fs-10 up">Trades</p>
+            </ion-col>
+            <ion-col (click)="changeTab('offers')" class="bg-main-l m-5">
+                <img src="https://png.icons8.com/ios-glyphs/24/ffffff/cash-in-hand.png">
+                <p class="m-0 fs-10 up">Offers</p>
+            </ion-col>
+        </ion-row>
+        </ion-grid> 
+    </div>
+
+    <div class="border-t text-left p-b-50">
+        <div *ngIf="tab == 'products'" class="border">
+            <p class="up fw-600 p-20 m-0 text-center">Products</p>
+
+            <div class="border" *ngFor="let product of user_products">
+                <ion-grid>
+                    <ion-row align-items-center [ngClass]="{'text-red' : product.featured}">
+                        <ion-col class="fw-700 fs-12">
+                                {{product.title}} at ${{product.price}}
+                        </ion-col>
+                        <ion-col class="text-right">
+                            <a class="inline p-r-10" (click)="editProductPage(product.id)"><img src="https://png.icons8.com/ios-glyphs/24/333333/edit-property.png"></a>
+                            <a class="inline p-r-10" (click)="singlePage(product.id)"><img src="https://png.icons8.com/ios/24/333333/right-filled.png"></a>
+                        </ion-col>             
+                    </ion-row>
+                </ion-grid>
+                <h5 *ngIf="user_products.length == 0" class="p-50 text-center">No products yet. Add a few to get it started.</h5>
+            </div>
+
+          </div>
+        <div *ngIf="tab == 'favourites'" class="border p-10">
+                <div class="border" *ngFor="let fav of user_favourites">
+                        <ion-grid>
+                            <ion-row align-items-center>
+                                <ion-col class="fw-700 fs-12">
+                                        {{fav.title}}
+                                </ion-col>
+                                <ion-col class="text-right">
+                                    <a class="inline p-r-10" (click)="singlePage(fav.id)"><img src="https://png.icons8.com/ios/24/333333/right-filled.png"></a>
+                                </ion-col>             
+                            </ion-row>
+                        </ion-grid>
+                    </div>
+                    <h5 *ngIf="user_favourites.length == 0" class="p-50 text-center">No favourites yet. Add a few to keep for later.</h5>
+        </div>
+        <div *ngIf="tab == 'trades'" class="border p-10">
+            
+                <p class="up fw-600 p-20 m-0 text-center">Trades</p>
+
+                <div class="border" *ngFor="let trade of user_trades">
+                    <ion-grid>
+                        <ion-row align-items-center>
+                            <ion-col class="fw-700 fs-12">
+                                    {{trade.offered_product_title}} for {{trade.desired_product_title}} <span *ngIf = "trade.offered_amount !+ 0">{{trade.offered_amount}} USD</span>
+                            </ion-col>
+                            <ion-col class="text-right">
+                                <a class="inline p-r-10" (click)="singlePage(trade.offered_product)"><img src="https://png.icons8.com/ios/24/333333/right-filled.png"></a>
+                            </ion-col>             
+                        </ion-row>
+                    </ion-grid>
+                </div>
+
+                <h5 *ngIf="user_trades.length == 0" class="p-50 text-center">No trades for your products.</h5>
+
+        </div>
+        <div *ngIf="tab == 'offers'" class="border p-10">
+            <p class="up fw-600 p-20 m-0 text-center">Offers</p>
+
+            <div class="border" *ngFor="let offer of user_offers">
+                <ion-grid>
+                    <ion-row align-items-center>
+                        <ion-col class="fw-700 fs-12">
+                                {{offer.sender_name}} offered ${{offer.amount}} for {{offer.product_title}}
+                        </ion-col>
+                        <ion-col class="text-right">
+                                <a class="inline p-r-20" (click)="declineOffer(offer.id)"><img src="https://png.icons8.com/ios-glyphs/24/333333/delete-forever.png"></a>
+                            <a class="inline p-r-20" (click)="acceptOffer(offer.sender)"><img src="https://png.icons8.com/ios-glyphs/24/333333/checked.png"></a>
+                            <a class="inline p-r-10" (click)="singlePage(offer.product)"><img src="https://png.icons8.com/ios/24/333333/right-filled.png"></a>
+                        </ion-col>             
+                    </ion-row>
+                </ion-grid>
+            </div>
+            <h5 *ngIf="user_offers.length == 0" class="p-50 text-center">No offers for your products.</h5>
+        </div>
+    </div>
+
+    <div class="main-footer bg-white border-t shadow-small">
+            <ion-grid class="text-center p-0">
+                    <ion-row class="p-0">
+                        <ion-col (click)="homePage()">
+                            <img src="https://png.icons8.com/ios-glyphs/24/333333/dog-house.png" class="">
+                        </ion-col>
+                        <ion-col (click)="addPage()">
+                            <img src="https://png.icons8.com/ios-glyphs/25/333333/plus-math.png" class="bg-white p-20 m-t--20 round-big border">
+                        </ion-col>
+                            <ion-col (click)="mapPage()">
+                                    <img src="https://png.icons8.com/ios-glyphs/24/333333/map-marker.png" class="">
+                                </ion-col>
+                    </ion-row>
+                  </ion-grid>
+      </div>
+
+</ion-content>

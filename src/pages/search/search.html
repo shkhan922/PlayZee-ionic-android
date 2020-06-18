@@ -1,0 +1,117 @@
+<ion-content>
+
+  <div class="bg-grad">
+          <ion-grid class="p-t-10 p-b-10">
+                  <ion-row align-items-center class="p-0 custom-form">
+                    <ion-col col-1 class="p-0 text-center">
+                        <!-- Back button -->
+                        <img src="https://png.icons8.com/ios/24/ffffff/left-filled.png" (click)="back()">
+                    </ion-col>
+                    <ion-col col-11 class="p-0">
+                        <ion-list class="custom-form-b m-0">
+
+                            <ion-grid class="p-0">
+                              <ion-row class="p-0">
+          
+                                <ion-col col-12 class="p-0">
+                                    <ion-item class="p-0">
+                                        <ion-input placeholder="Search for..." [(ngModel)]="query" (ionChange)="getSearchResults()" class="text-white border-w"></ion-input>
+                                      </ion-item>
+                                      <ion-item class="p-0">
+                                          <ion-input placeholder="Location" [(ngModel)]="location" (ionChange)="getSearchResults()" class="text-white"></ion-input>
+                                        </ion-item>
+                                        <ion-item class="p-0">
+                                            <ion-label class="text-white">Category</ion-label>
+                                            <ion-select [(ngModel)]="category" class="category-select" (ionChange)="getSearchResults()" class="text-white">
+                                              <ion-option *ngFor="let cat of categories" value="{{cat.id}}">{{cat.cat_title}}</ion-option>
+                                            </ion-select>
+                                          </ion-item>
+                                </ion-col>
+          
+                              </ion-row>
+                            </ion-grid>
+                           </ion-list>
+
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+
+                
+    </div>
+
+      <ion-grid>
+        <ion-row>
+          <ion-col col-6 *ngFor="let product of searchResults">
+            <a (click)="singlePage(product.id)" class="block m-5">
+                <div *ngIf="product.image" [style.background-image]="getBackgroundFaded(product.image)" style="background-size:cover; background-position:center; height:120px;width:100%;" class="relative round-small shadow-small">
+                    <div class="ov-l-t">
+                        <div><img *ngIf="product.type == 'sell'" class="bg-white p-5" src="https://png.icons8.com/ios/14/333333/tags-filled.png"></div>
+                        <div><img *ngIf="product.type == 'rent'" class="bg-white p-5" src="https://png.icons8.com/ios/14/333333/car-rental-filled.png"></div>
+                        <div><img *ngIf="product.type == 'giveaway'" class="bg-white p-5" src="https://png.icons8.com/ios/14/333333/wedding-gift-filled.png"></div>
+                    </div>
+                </div>
+                <div class="text-left p-5 fw-900">
+                    <p class="up fs-11 m-0 m-b-5">{{product.title}}</p>
+                    <p class="m-0 fw-900 fs-12">${{product.price}}</p>
+                </div>
+              </a>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <div class="bg-main p-b-40">
+
+          <!-- newest products -->                                                                                                                                                                                                              
+          <p class="up fw-600 fs-11 p-t-30 p-l-20 p-b-15 m-0 border-b">fresh stuff
+                  <span class="right p-r-10">
+                          <img src="https://png.icons8.com/ios-glyphs/9/666666/back.png">
+                          <img src="https://png.icons8.com/ios-glyphs/9/666666/forward.png">
+                  </span>
+          </p>
+          <ion-scroll scrollX="true" scrollY="false" style="width:100vw;height:210px;" class="border-b">
+                  <ion-row nowrap class="p-l-20 p-t-20 p-b-30">
+                      <a (click)="singlePage(product.id)" class="inline m-5 text-center" *ngFor="let product of fresh_products | slice:0:12">
+                          <div *ngIf="product.image" [style.background-image]="getBackgroundFaded(product.image)" style="background-size:cover; background-position:center; height:120px;width:140px;" class="relative round-small shadow-small">
+                            <div class="ov-l-t">
+                                <div><img *ngIf="product.type == 'sell'" class="bg-white p-5" src="https://png.icons8.com/ios/14/333333/tags-filled.png"></div>
+                                <div><img *ngIf="product.type == 'rent'" class="bg-white p-5" src="https://png.icons8.com/ios/14/333333/car-rental-filled.png"></div>
+                                <div><img *ngIf="product.type == 'giveaway'" class="bg-white p-5" src="https://png.icons8.com/ios/14/333333/wedding-gift-filled.png"></div>
+                            </div>
+                          </div>
+                          <div class="text-left p-5 fw-900">
+                              <p class="up fs-11 m-0 m-b-5">{{product.title}}</p>
+                              <p class="m-0 fw-900 fs-12">${{product.price}}</p>
+                          </div>
+                        </a>
+                  </ion-row>
+                </ion-scroll>
+      
+      
+          <!-- featured products -->                                                                                                                                                                                                              
+          <p class="up fw-600 fs-11 p-t-30 p-l-20 p-b-15 m-0 border-b">specials
+              <span class="right p-r-10">
+                      <img src="https://png.icons8.com/ios-glyphs/9/666666/back.png">
+                      <img src="https://png.icons8.com/ios-glyphs/9/666666/forward.png">
+              </span>
+          </p>
+          <ion-scroll scrollX="true" scrollY="false" style="width:100vw;height:210px;" class="border-b">
+            <ion-row nowrap class="p-l-20 p-t-20 p-b-30 border-b">
+                <a (click)="singlePage(product.id)" class="inline m-5 text-center" *ngFor="let product of featured_products">
+                    <div *ngIf="product.image" [style.background-image]="getBackgroundFaded(product.image)" style="background-size:cover; background-position:center; height:120px;width:140px;" class="relative round-small shadow-small">
+                        <div class="ov-l-t">
+                            <div><img *ngIf="product.type == 'sell'" class="bg-white p-5" src="https://png.icons8.com/ios/14/333333/tags-filled.png"></div>
+                            <div><img *ngIf="product.type == 'rent'" class="bg-white p-5" src="https://png.icons8.com/ios/14/333333/car-rental-filled.png"></div>
+                            <div><img *ngIf="product.type == 'giveaway'" class="bg-white p-5" src="https://png.icons8.com/ios/14/333333/wedding-gift-filled.png"></div>
+                        </div>
+                    </div>
+                    <div class="text-left p-5 fw-900">
+                        <p class="up fs-11 m-0 m-b-5">{{product.title}}</p>
+                        <p class="m-0 fw-900 fs-12">${{product.price}}</p>
+                    </div>
+                  </a>
+            </ion-row>
+          </ion-scroll>
+        
+        </div>
+        
+</ion-content>

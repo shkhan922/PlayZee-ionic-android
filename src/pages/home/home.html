@@ -1,0 +1,109 @@
+<ion-header collapse="condense">
+  <div>
+    <ion-toolbar>
+      <ion-title size="large"> PLAYZEE </ion-title>
+    </ion-toolbar>
+  </div>
+</ion-header>
+<!-- categories -->
+<ion-content>
+  <div>
+    <ion-scroll scrollX="true" scrollY="false" style="width:100vw;height:140px;">
+      <ion-row nowrap class="p-l-20 p-t-10 p-b-20">
+        <span class="p-5" *ngFor="let cat of categories">
+          <a (click)="categoryPage(cat.id)" class="inline text-center bg-main-l shadow-big p-15">
+            <img src="{{cat.icon}}" height="35">
+            <p class="m-5 fs-10 up fw-900">{{cat.cat_title}}</p>
+          </a>
+        </span>
+      </ion-row>
+    </ion-scroll>
+  </div>
+
+
+  <div class="bg-main p-b-40">
+
+    <!-- newest products -->
+    <p class="up fw-600 fs-11 p-t-30 p-l-20 p-b-15 m-0 border-b">fresh stuff
+      <span class="right p-r-10">
+        <img src="https://png.icons8.com/ios-glyphs/9/666666/back.png">
+        <img src="https://png.icons8.com/ios-glyphs/9/666666/forward.png">
+      </span>
+    </p>
+    <ion-scroll scrollX="true" scrollY="false" style="width:100vw;height:230px;" class="border-b">
+      <ion-row nowrap class="p-l-20 p-t-20 p-b-30">
+        <a (click)="singlePage(product.id)" class="inline m-5 text-center"
+          *ngFor="let product of fresh_products | slice:0:12">
+          <div *ngIf="product.image" [style.background-image]="getBackgroundFaded(product.image)"
+            style="background-size:cover; background-position:center; height:140px;width:190px;"
+            class="relative round-small shadow-small">
+
+            <div class="ov-l-t">
+              <div><img *ngIf="product.type == 'sell'" class="bg-white p-5"
+                  src="https://png.icons8.com/ios/14/333333/tags-filled.png"></div>
+              <div><img *ngIf="product.type == 'rent'" class="bg-white p-5"
+                  src="https://png.icons8.com/ios/14/333333/car-rental-filled.png"></div>
+              <div><img *ngIf="product.type == 'giveaway'" class="bg-white p-5"
+                  src="https://png.icons8.com/ios/14/333333/wedding-gift-filled.png"></div>
+            </div>
+
+          </div>
+          <div class="text-left p-5 fw-900">
+            <p class="up fs-11 m-0 m-b-5">{{product.title}}</p>
+            <p *ngIf="product.price != 0" class="m-0 fw-900 fs-12">${{product.price}}</p>
+          </div>
+        </a>
+      </ion-row>
+    </ion-scroll>
+
+
+    <!-- featured products -->
+    <p class="up fw-600 fs-11 p-t-30 p-l-20 p-b-15 m-0 border-b">specials
+      <span class="right p-r-10">
+        <img src="https://png.icons8.com/ios-glyphs/9/666666/back.png">
+        <img src="https://png.icons8.com/ios-glyphs/9/666666/forward.png">
+      </span>
+    </p>
+    <ion-scroll scrollX="true" scrollY="false" style="width:100vw;height:210px;" class="border-b">
+      <ion-row nowrap class="p-l-20 p-t-20 p-b-30 border-b">
+        <a (click)="singlePage(product.id)" class="inline m-5 text-center" *ngFor="let product of featured_products">
+          <div *ngIf="product.image" [style.background-image]="getBackgroundFaded(product.image)"
+            style="background-size:cover; background-position:center; height:120px;width:140px;"
+            class="relative round-small shadow-small">
+            <div class="ov-l-t">
+              <div><img *ngIf="product.type == 'sell'" class="bg-white p-5"
+                  src="https://png.icons8.com/ios/14/333333/tags-filled.png"></div>
+              <div><img *ngIf="product.type == 'rent'" class="bg-white p-5"
+                  src="https://png.icons8.com/ios/14/333333/car-rental-filled.png"></div>
+              <div><img *ngIf="product.type == 'giveaway'" class="bg-white p-5"
+                  src="https://png.icons8.com/ios/14/333333/wedding-gift-filled.png"></div>
+            </div>
+          </div>
+          <div class="text-left p-5 fw-900">
+            <p class="up fs-11 m-0 m-b-5">{{product.title}}</p>
+            <p *ngIf="product.price != 0" class="m-0 fw-900 fs-12">${{product.price}}</p>
+          </div>
+        </a>
+      </ion-row>
+    </ion-scroll>
+
+  </div>
+
+  <div class="main-footer bg-white border-t shadow-small">
+    <ion-grid class="text-center p-0">
+      <ion-row class="p-0">
+        <ion-col (click)="searchPage()">
+          <img src="https://png.icons8.com/ios-glyphs/24/333333/search.png" class="">
+        </ion-col>
+        <ion-col (click)="addPage()">
+          <img src="https://png.icons8.com/ios-glyphs/25/333333/plus-math.png"
+            class="bg-white p-20 m-t--20 round-big border">
+        </ion-col>
+        <ion-col (click)="mapPage()">
+          <img src="https://png.icons8.com/ios-glyphs/24/333333/map-marker.png" class="">
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+</ion-content>

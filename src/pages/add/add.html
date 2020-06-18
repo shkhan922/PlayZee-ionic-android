@@ -1,0 +1,185 @@
+<ion-content class="text-center">
+
+    <!-- Back button -->
+  <img class="ov-l-t p-t-30 p-l-20" src="https://png.icons8.com/ios/24/ffffff/left-filled.png" (click)="back()">
+
+    <div class="bg-grad p-20 m-b-20">
+      <h4 class="m-0">Submit your product</h4>
+      <p class="m-0">It is easy to have your product listed.</p>
+  </div>
+    
+    <ion-list class="p-10 add-form">
+
+        <p class="up fw-600 fs-11 p-t-30 p-l-20 p-b-15 m-0 text-left">i want to
+            <span class="right p-r-10">
+                    <img src="https://png.icons8.com/ios/12/666666/guarantee.png">
+            </span>
+    </p>
+  <ion-list radio-group [(ngModel)]="type">
+        <ion-grid class="p-0">
+            <ion-row class="bg-checked p-0">
+                <ion-col col-4 class="p-0">
+                      <ion-item>
+                              <ion-label>sell</ion-label>
+                              <ion-radio value="sell"></ion-radio>
+                            </ion-item>
+                </ion-col>
+                <ion-col col-4 class="p-0">
+                    <ion-item>
+                            <ion-label>rent</ion-label>
+                            <ion-radio value="rent"></ion-radio>
+                          </ion-item>
+              </ion-col>
+              <ion-col col-4 class="p-0">
+                  <ion-item>
+                          <ion-label>giveaway</ion-label>
+                          <ion-radio value="giveaway"></ion-radio>
+                        </ion-item>
+            </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-list>
+
+        <ion-item class="m-b-20">
+            <ion-label>Product Category</ion-label>
+            <ion-select [(ngModel)]="category" class="category-select">
+              <ion-option *ngFor="let cat of categories" value="{{cat.id}}">{{cat.cat_title}}</ion-option>
+            </ion-select>
+          </ion-item>
+
+          <p class="up fw-600 fs-11 p-t-30 p-l-20 p-b-15 m-0 text-left">main info
+                <span class="right p-r-10">
+                        <img src="https://png.icons8.com/ios/12/666666/info-squared.png">
+                </span>
+        </p>
+
+          <ion-item class="m-b-5">
+            <ion-label floating>Title</ion-label>
+            <ion-input type="text" value="" [(ngModel)]="title"></ion-input>
+          </ion-item>
+
+            <ion-item class="m-b-5" *ngIf="type != 'giveaway'">
+                <ion-label floating>Price ($ <span *ngIf="type == 'rent'"> / day</span>)</ion-label>
+                <ion-input type="tel" value="" [(ngModel)]="price"></ion-input>
+              </ion-item>
+
+          <div class="bg-dark full fixed-top z-hi p-30" *ngIf="showAutocomplete">
+              <div class="p-l-30 p-r-30 text-center">
+                  <img src="https://png.icons8.com/cotton/100/000000/gps-searching.png">
+            
+                  <h4>Select product location</h4>
+                  <p>Use the search bar below to find your location</p>
+              </div>
+              <google-places-autocomplete (callback)="getLocation($event[0])" key="AIzaSyD7JULkGV1_XdtrDPTiBnSb_ZLPbAbgoy8"></google-places-autocomplete>
+          </div>
+
+          <ion-item (click)="autocomplete()" class="m-b-5">
+              <ion-label floating>Location</ion-label>
+              <ion-input type="text" value="" [(ngModel)]="location"></ion-input>
+            </ion-item>
+        
+          <ion-item class="m-b-20">
+            <ion-label floating>Description</ion-label>
+            <ion-textarea type="text" [(ngModel)]="body"></ion-textarea>
+          </ion-item>
+
+          <p class="up fw-600 fs-11 p-t-30 p-l-20 p-b-15 m-0 text-left">product condition
+                <span class="right p-r-10">
+                        <img src="https://png.icons8.com/ios/12/666666/used-product.png">
+                </span>
+        </p>
+          <ion-list radio-group [(ngModel)]="condition" class="p-b-10 m-0">
+                <ion-grid class="p-0">
+                    <ion-row class="bg-checked p-0">
+                        <ion-col col-6 class="p-0">
+                              <ion-item>
+                                      <ion-label>New</ion-label>
+                                      <ion-radio value="new"></ion-radio>
+                                    </ion-item>
+                        </ion-col>
+                        <ion-col col-6 class="p-0">
+                              <ion-item>
+                                      <ion-label>Used</ion-label>
+                                      <ion-radio value="used"></ion-radio>
+                                    </ion-item>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </ion-list>
+
+
+            <p class="up fw-600 fs-11 p-t-30 p-l-20 p-b-15 m-0 text-left">has warranty
+                    <span class="right p-r-10">
+                            <img src="https://png.icons8.com/ios/12/666666/guarantee.png">
+                    </span>
+            </p>
+          <ion-list radio-group [(ngModel)]="warranty">
+                <ion-grid class="p-0">
+                    <ion-row class="bg-checked p-0">
+                        <ion-col col-6 class="p-0">
+                              <ion-item>
+                                      <ion-label>Yes</ion-label>
+                                      <ion-radio value="true"></ion-radio>
+                                    </ion-item>
+                        </ion-col>
+                        <ion-col col-6 class="p-0">
+                              <ion-item>
+                                      <ion-label>No</ion-label>
+                                      <ion-radio value="false"></ion-radio>
+                                    </ion-item>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </ion-list>
+
+            <p class="up fw-600 fs-11 p-t-30 p-l-20 p-b-15 m-0 text-left">will you ship?
+                    <span class="right p-r-10">
+                            <img src="https://png.icons8.com/ios/12/666666/guarantee.png">
+                    </span>
+            </p>
+          <ion-list radio-group [(ngModel)]="shipping">
+                <ion-grid class="p-0">
+                    <ion-row class="bg-checked p-0">
+                        <ion-col col-6 class="p-0">
+                              <ion-item>
+                                      <ion-label>Yes</ion-label>
+                                      <ion-radio value="true"></ion-radio>
+                                    </ion-item>
+                        </ion-col>
+                        <ion-col col-6 class="p-0">
+                              <ion-item>
+                                      <ion-label>No</ion-label>
+                                      <ion-radio value="false"></ion-radio>
+                                    </ion-item>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </ion-list>
+
+
+            <p class="up fw-600 fs-11 p-t-30 p-l-20 p-b-15 m-0 text-left">product image
+                    <span class="right p-r-10">
+                            <img src="https://png.icons8.com/ios/12/666666/add-image.png">
+                    </span>
+            </p>
+              <ion-grid class="p-t-20 p-b-20 bg-white">
+                  <ion-row class="text-center">
+                    <ion-col col-6 class="border-r" (click)="getCamera()">
+                        <img src="https://png.icons8.com/ios-glyphs/34/333333/camera.png">
+                        <p class="m-5 fs-10 up">Camera</p>
+                    </ion-col>
+                    <ion-col col-6 (click)="getLibrary()">
+                        <img src="https://png.icons8.com/ios-glyphs/34/333333/picture.png">
+                        <p class="m-5 fs-10 up">Library</p>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+
+                <div *ngIf="image" [style.background-image]="getBackground(image)" style="background-size:cover; background-position:center; height:220px;width:100%;" class="relative m-t-20">
+                </div>
+      
+    <button class="m-t-30" ion-button color="primary" round block (click)="add(title, price, body, category, location, condition, warranty, type)">Submit</button>
+    <a class="block p-t-50" (click)="homePage()"><img class="" src="https://png.icons8.com/ios/10/333333/left-filled.png" (click)="back()"> Back to home</a>
+  </ion-list>
+
+</ion-content>

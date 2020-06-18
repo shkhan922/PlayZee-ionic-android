@@ -1,0 +1,8 @@
+{
+  "name": "Playzee",
+  "integrations": {
+    "capacitor": {},
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}
